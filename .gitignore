@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local Claude Code settings (per-user)
+.claude/settings.local.json
+
+# Desktop trash folder created in the bind-mounted workspace
+.Trash-*/
+
+# Editors / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+CLAUDE.md
+.devcontainer

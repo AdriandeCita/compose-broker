@@ -1,0 +1,3 @@
+{ "mcpServers": { "compose": {
+    "command": "socat",
+    "args": ["STDIO", "UNIX-CONNECT:/run/compose-broker/broker.sock"] } } }

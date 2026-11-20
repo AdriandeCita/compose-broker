@@ -1,0 +1,27 @@
+# Demo stack for exercising compose-broker end to end. Shaped to pass the
+# broker policy: no `image:` on built services, no host bind mounts, build
+# contexts inside the project.
+#
+# ticker: context is the project root, Dockerfile chosen with `dockerfile:`.
+# web:    nested context (web/) with its own .dockerignore. Like every compose
+#         call, the build runs in the broker's sandbox, so a symlink swapped
+#         in for web/ cannot reach host files (SPEC 5.9).
+services:
+  ticker:
+    build:
+      context: .
+      dockerfile: ticker/Dockerfile
+    init: true
+    environment:
+      TICK_INTERVAL: "1"
+      WARN_EVERY: "5"
+  web:
+    build:
+      context: ./web
+    ports:
+      - "127.0.0.1::8080"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
